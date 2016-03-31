@@ -1,10 +1,11 @@
 exports = module.exports = function(app, mongoose) {
 
 	var userSchema = new mongoose.Schema({
-		user: 		{ type: String },
+		username: 		{ type: String, index: { unique: true }},
 		password: 		{ type: String },
-		email: 	{ type: String },
-		emailAuth: { type: Boolean}
+		email: 	{ type: String, index: { unique: true }},
+		userAuth: { type: Boolean},
+		emailAuth: { type: Boolean},
 		company:  	{ type: String },
 		companyDescription: 	{ type: String },
 		managerName: { type: String },
@@ -18,6 +19,6 @@ exports = module.exports = function(app, mongoose) {
 		otherAccount: { type: String },
 	});
 
-	mongoose.model('User', tvshowSchema);
+	mongoose.model('User', userSchema);
 
 };

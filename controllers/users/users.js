@@ -12,58 +12,82 @@ exports.findAllUsers = function(req, res) {
 	});
 };
 
-//GET - Return a TVShow with specified ID
-exports.findUserById = function(req, res) {
-	User.findById(req.params.id, function(err, user) {
+//GET - Return a User with specified Name
+exports.findUserByName = function(req, res) {
+	console.log('req.params.name');
+	console.log(req.params.name);
+	console.log(typeof(req.params.name));
+	User.findOne({ "username" : req.params.name }, function(err, user) {
+		console.log('user');
+		console.log(user);
     if(err) return res.send(500, err.message);
 
-    console.log('GET /user/' + req.params.id);
+    console.log('GET /user/' + req.params.name);
 		res.status(200).jsonp(user);
 	});
 };
 
-//POST - Insert a new TVShow in the DB
+//POST - Insert a new User in the DB
 exports.addUser = function(req, res) {
 	console.log('POST');
 	console.log(req.body);
 
-	var tvshow = new User({
-		title:    req.body.title,
-		year: 	  req.body.year,
-		country:  req.body.country,
-		poster:   req.body.poster,
-		seasons:  req.body.seasons,
-		genre:    req.body.genre,
-		summary:  req.body.summary
+	var user = new User({
+		username : req.body.username,
+		password : req.body.password,
+		email : req.body.email,
+		userAuth: req.body.userAuth,
+		emailAuth : false,
+		company : '',
+		companyDescription : '',
+		managerName : '',
+		category: '',
+		office: '',
+		address: '',
+		telephone: '',
+		fax: '',
+		webpage: '',
+		facebookAccount: '',
+		otherAccount: ''
 	});
 
-	tvshow.save(function(err, tvshow) {
+	user.save(function(err, user) {
 		if(err) return res.send(500, err.message);
-    res.status(200).jsonp(tvshow);
+    res.status(200).jsonp(user);
 	});
 };
 
 //PUT - Update a register already exists
 exports.updateUser = function(req, res) {
-	User.findById(req.params.id, function(err, user) {
-		tvshow.title   = req.body.petId;
-		tvshow.year    = req.body.year;
-		tvshow.country = req.body.country;
-		tvshow.poster  = req.body.poster;
-		tvshow.seasons = req.body.seasons;
-		tvshow.genre   = req.body.genre;
-		tvshow.summary = req.body.summary;
 
-		tvshow.save(function(err) {
+
+	User.findOne({username:req.params.name}, function(err, user) {
+		user.username   = req.body.username ? req.body.username:user.username;
+		user.password    = req.body.password ? req.body.password: user.password;
+		user.email = req.body.email ? req.body.email: user.email;
+		user.emailAuth  = req.body.emailAuth ? req.body.emailAuth: user.emailAuth;
+		user.company = req.body.company ? req.body.company : user.company;
+		user.companyDescription   = req.body.companyDescription ? req.body.companyDescription: user.companyDescription;
+		user.managerName = req.body.managerName ? req.body.managerName: user.managerName;
+		user.category = req.body.category ? req.body.category: user.category;
+		user.office = req.body.office ? req.body.office: user.office;
+		user.address = req.body.address ? req.body.address: user.address;
+		user.telephone = req.body.telephone ? req.body.telephone: user.telephone;
+		user.fax = req.body.fax  ? req.body.fax : user.fax ;
+		user.webpage = req.body.webpage ? req.body.webpage: user.webpage;
+		user.facebookAccount = req.body.facebookAccount ? req.body.facebookAccount: user.facebookAccount;
+		user.otherAccount = req.body.otherAccount ? req.body.otherAccount: user.otherAccount;
+
+		user.save(function(err) {
 			if(err) return res.send(500, err.message);
-      res.status(200).jsonp(tvshow);
+      		res.status(200).jsonp(user);
 		});
 	});
 };
 
-//DELETE - Delete a TVShow with specified ID
+//DELETE - Delete a User with specified ID
 exports.deleteUser = function(req, res) {
-	User.findById(req.params.id, function(err, user) {
+	User.findOne(req.params.name, function(err, user) {
 		user.remove(function(err) {
 			if(err) return res.send(500, err.message);
       res.status(200);

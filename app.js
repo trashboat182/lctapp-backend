@@ -33,8 +33,8 @@ locotoApi.route('/users')
   .get(LocotoUserCtrl.findAllUsers)
   .post(LocotoUserCtrl.addUser);
 
-locotoApi.route('/users/:id')
-  .get(LocotoUserCtrl.findUserById)
+locotoApi.route('/users/:name')
+  .get(LocotoUserCtrl.findUserByName)
   .put(LocotoUserCtrl.updateUser)
   .delete(LocotoUserCtrl.deleteUser);
 
