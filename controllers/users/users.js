@@ -16,7 +16,6 @@ exports.findAllUsers = function(req, res) {
 exports.findUserByName = function(req, res) {
 	console.log('req.params.name');
 	console.log(req.params.name);
-	console.log(typeof(req.params.name));
 	User.findOne({ "username" : req.params.name }, function(err, user) {
 		console.log('user');
 		console.log(user);

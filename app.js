@@ -39,6 +39,12 @@ locotoApi.route('/users/:name')
   .put(LocotoUserCtrl.updateUser)
   .delete(LocotoUserCtrl.deleteUser);
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Accept'); // add remove headers according to your needs
+  next()
+})
 app.use('/api', locotoApi);
 
 // Start server
