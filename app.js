@@ -27,6 +27,7 @@ router.get('/', function(req, res) {
 app.use(router);
 
 // API routes
+/** USERS */
 var locotoApi = express.Router();
 
 locotoApi.route('/users')
