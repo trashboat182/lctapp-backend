@@ -14,6 +14,7 @@ exports = module.exports = function(app, mongoose) {
 		address: { type: String },
 		telephone: { type: String },
 		fax: { type: String },
+		emailSecundary : {type: String},
 		webpage: { type: String },
 		facebookAccount: { type: String },
 		otherAccount: { type: String },

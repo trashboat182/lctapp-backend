@@ -45,7 +45,7 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Accept'); // add remove headers according to your needs
   next()
 })
-app.use('/api', locotoApi);
+app.use('/api', locotoApi); 
 
 // Start server
 app.listen(9000, function() {

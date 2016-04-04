@@ -45,6 +45,7 @@ exports.addUser = function(req, res) {
 		address: '',
 		telephone: '',
 		fax: '',
+		emailSecundary: '',
 		webpage: '',
 		facebookAccount: '',
 		otherAccount: ''
@@ -58,30 +59,31 @@ exports.addUser = function(req, res) {
 
 //PUT - Update a register already exists
 exports.updateUser = function(req, res) {
+	if(req.params.name){
+		User.findOne({username:req.params.name}, function(err, user) {
+			user.username   = req.body.username ? req.body.username:user.username;
+			user.password    = req.body.password ? req.body.password: user.password;
+			user.email = req.body.email ? req.body.email: user.email;
+			user.emailAuth  = req.body.emailAuth ? req.body.emailAuth: user.emailAuth;
+			user.company = req.body.company ? req.body.company : user.company;
+			user.companyDescription   = req.body.companyDescription ? req.body.companyDescription: user.companyDescription;
+			user.managerName = req.body.managerName ? req.body.managerName: user.managerName;
+			user.category = req.body.category ? req.body.category: user.category;
+			user.office = req.body.office ? req.body.office: user.office;
+			user.address = req.body.address ? req.body.address: user.address;
+			user.telephone = req.body.telephone ? req.body.telephone: user.telephone;
+			user.fax = req.body.fax  ? req.body.fax : user.fax ;
+			user.emailSecundary = req.body.emailSecundary  ? req.body.emailSecundary : user.emailSecundary ;
+			user.webpage = req.body.webpage ? req.body.webpage: user.webpage;
+			user.facebookAccount = req.body.facebookAccount ? req.body.facebookAccount: user.facebookAccount;
+			user.otherAccount = req.body.otherAccount ? req.body.otherAccount: user.otherAccount;
 
-
-	User.findOne({username:req.params.name}, function(err, user) {
-		user.username   = req.body.username ? req.body.username:user.username;
-		user.password    = req.body.password ? req.body.password: user.password;
-		user.email = req.body.email ? req.body.email: user.email;
-		user.emailAuth  = req.body.emailAuth ? req.body.emailAuth: user.emailAuth;
-		user.company = req.body.company ? req.body.company : user.company;
-		user.companyDescription   = req.body.companyDescription ? req.body.companyDescription: user.companyDescription;
-		user.managerName = req.body.managerName ? req.body.managerName: user.managerName;
-		user.category = req.body.category ? req.body.category: user.category;
-		user.office = req.body.office ? req.body.office: user.office;
-		user.address = req.body.address ? req.body.address: user.address;
-		user.telephone = req.body.telephone ? req.body.telephone: user.telephone;
-		user.fax = req.body.fax  ? req.body.fax : user.fax ;
-		user.webpage = req.body.webpage ? req.body.webpage: user.webpage;
-		user.facebookAccount = req.body.facebookAccount ? req.body.facebookAccount: user.facebookAccount;
-		user.otherAccount = req.body.otherAccount ? req.body.otherAccount: user.otherAccount;
-
-		user.save(function(err) {
-			if(err) return res.send(500, err.message);
-      		res.status(200).jsonp(user);
+			user.save(function(err) {
+				if(err) return res.send(500, err.message);
+	      		res.status(200).jsonp(user);
+			});
 		});
-	});
+	}
 };
 
 //DELETE - Delete a User with specified ID
