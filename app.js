@@ -3,6 +3,7 @@ var express         = require("express"),
     bodyParser      = require("body-parser"),
     methodOverride  = require("method-override"),
     mongoose        = require('mongoose');
+    multer = require('multer');
 
 // Connection to DB
 mongoose.connect('mongodb://localhost/locoto', function(err, res) {
@@ -15,6 +16,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 
+  var storage = multer.diskStorage({ //multers disk storage settings
+      destination: function (req, file, cb) {
+          cb(null, './uploads/')
+      },
+      filename: function (req, file, cb) {
+          var datetimestamp = Date.now();
+          cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
+      }
+  });
+
+  var upload = multer({ //multer settings
+      storage: storage
+  }).single('file');
+
+
+
 // Import Models and controllers
 var LoginUserModel     = require('./models/users/users')(app, mongoose);
 var LocotoUserCtrl = require('./controllers/users/users');
@@ -22,7 +39,8 @@ var LocotoUserCtrl = require('./controllers/users/users');
 // Example Route
 var router = express.Router();
 router.get('/', function(req, res) {
-  res.send("Hello world!");
+  console.log(__dirname);
+  res.send("Hello world! "+__dirname);
 });
 app.use(router);
 
@@ -46,6 +64,19 @@ app.use(function (req, res, next) {
   next()
 })
 app.use('/api', locotoApi); 
+
+ /** API path that will upload the files */
+  app.post('/upload', function(req, res) {
+    console.log('post file');
+      upload(req,res,function(err){
+          if(err){
+               res.json({error_code:1,err_desc:err});
+               return;
+          }
+           res.json({error_code:0,err_desc:null});
+      })
+     
+  });
 
 // Start server
 app.listen(9000, function() {
