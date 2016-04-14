@@ -33,3 +33,5 @@ Divide nodejs File
 
 http://stackoverflow.com/questions/6059246/how-to-include-route-handlers-in-multiple-files-in-express
 
+http://stackoverflow.com/questions/19619936/how-to-separate-the-routes-and-models-from-app-js-using-nodejs-and-express
+
