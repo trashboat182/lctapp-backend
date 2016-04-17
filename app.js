@@ -35,6 +35,7 @@ app.use(methodOverride());
 // Import Models and controllers
 var LoginUserModel     = require('./models/users/users')(app, mongoose);
 var LocotoUserCtrl = require('./controllers/users/users');
+var LocotoFileCtrl = require('./controllers/users/files');
 
 // Example Route
 var router = express.Router();
@@ -56,6 +57,9 @@ locotoApi.route('/users/:name')
   .get(LocotoUserCtrl.findUserByName)
   .put(LocotoUserCtrl.updateUser)
   .delete(LocotoUserCtrl.deleteUser);
+
+locotoApi.route('/file/image/:name')
+.put(LocotoFileCtrl.addImage)
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins

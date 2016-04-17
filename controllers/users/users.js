@@ -48,7 +48,21 @@ exports.addUser = function(req, res) {
 		emailSecundary: '',
 		webpage: '',
 		facebookAccount: '',
-		otherAccount: ''
+		otherAccount: '',
+		files: [
+	      {
+	         type: 'images',
+	         data:[]
+	      },
+	      {
+	         type: 'music',
+	         data:[]
+	      },
+	      {
+	         type: 'videos',
+	         data:[]
+	      }
+	    ]
 	});
 
 	user.save(function(err, user) {
