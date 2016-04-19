@@ -77,9 +77,8 @@ app.use('/api', locotoApi);
                res.json({error_code:1,err_desc:err});
                return;
           }
-           res.json({error_code:0,err_desc:null});
+          res.json(req.file);
       })
-     
   });
 
 // Start server
