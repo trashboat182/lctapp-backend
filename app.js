@@ -45,6 +45,13 @@ router.get('/', function(req, res) {
 });
 app.use(router);
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Accept'); // add remove headers according to your needs
+  next()
+})
+
 // API routes
 /** USERS */
 var locotoApi = express.Router();
@@ -60,18 +67,15 @@ locotoApi.route('/users/:name')
 
 locotoApi.route('/file/image/:name')
 .put(LocotoFileCtrl.addImage)
+.put(LocotoFileCtrl.addMusic)
+.put(LocotoFileCtrl.addVideo)
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); // * => allow all origins
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Accept'); // add remove headers according to your needs
-  next()
-})
+/** FILES */
+
 app.use('/api', locotoApi); 
 
  /** API path that will upload the files */
   app.post('/upload', function(req, res) {
-    console.log('post file');
       upload(req,res,function(err){
           if(err){
                res.json({error_code:1,err_desc:err});

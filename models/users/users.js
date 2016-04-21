@@ -18,7 +18,7 @@ exports = module.exports = function(app, mongoose) {
 		webpage: { type: String },
 		facebookAccount: { type: String },
 		otherAccount: { type: String },
-		files: { type : Array}
+		files: { type : Array , 'default' : [] }
 	});
 
 	mongoose.model('User', userSchema);
