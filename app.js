@@ -4,6 +4,7 @@ var express         = require("express"),
     methodOverride  = require("method-override"),
     mongoose        = require('mongoose');
     multer = require('multer');
+    nodemailer      = require('nodemailer');
 
 // Connection to DB
 mongoose.connect('mongodb://localhost/locoto', function(err, res) {
@@ -36,6 +37,7 @@ app.use(methodOverride());
 var LoginUserModel     = require('./models/users/users')(app, mongoose);
 var LocotoUserCtrl = require('./controllers/users/users');
 var LocotoFileCtrl = require('./controllers/users/files');
+var LocotoAuthCtrl = require('./controllers/users/auth');
 
 // Example Route
 var router = express.Router();
@@ -69,6 +71,9 @@ locotoApi.route('/file/image/:name')
 .put(LocotoFileCtrl.addImage)
 .put(LocotoFileCtrl.addMusic)
 .put(LocotoFileCtrl.addVideo)
+
+locotoApi.route('/auth/:name')
+    .put(LocotoAuthCtrl.authUser);
 
 /** FILES */
 

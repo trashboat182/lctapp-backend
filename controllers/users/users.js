@@ -71,6 +71,8 @@ exports.addUser = function(req, res) {
 
 //PUT - Update a register already exists
 exports.updateUser = function(req, res) {
+	console.log('PUT');
+	console.log(req.body);
 	if(req.params.name){
 		User.findOne({username:req.params.name}, function(err, user) {
 			user.username   = req.body.username ? req.body.username:user.username;
